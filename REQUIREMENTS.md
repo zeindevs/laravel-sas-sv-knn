@@ -27,7 +27,7 @@
   - id
   - name
   - weight
-  - created_atV@
+  - created_at
   - updated_at
 
 - questions
