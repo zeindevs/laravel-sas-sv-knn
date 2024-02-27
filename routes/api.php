@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiWeightController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::controller(ApiWeightController::class)->group(function () {
+    Route::get('/weights', 'index')->name('weights.index');
+    Route::get('/weights/{id}', 'show')->name('weights.show');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('/weights', 'store')->name('weights.store');
+        Route::put('/weights/{id}', 'update')->whereNumber('id')->name('weights.update');
+        Route::delete('/weights/{id}', 'destroy')->whereNumber('id')->name('weights.destroy');
+    });
 });
