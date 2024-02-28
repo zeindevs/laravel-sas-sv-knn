@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             WeightSeeder::class,
             QuestionSeeder::class,
+            DatasetSeeder::class,
         ]);
     }
 }

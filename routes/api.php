@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ApiPredictionController;
 use App\Http\Controllers\Api\ApiQuestionController;
+use App\Http\Controllers\Api\ApiSubmissionController;
 use App\Http\Controllers\Api\ApiWeightController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +40,9 @@ Route::controller(ApiQuestionController::class)->group(function () {
         Route::put('/questions/{id}', 'update')->whereNumber('id')->name('questions.update');
         Route::delete('/questions/{id}', 'destroy')->whereNumber('id')->name('questions.destroy');
     });
+});
+
+Route::controller(ApiPredictionController::class)->group(function () {
+    Route::get('/predicts', 'predict')->name('predicts.predict');
+    Route::get('/predicts/datasets', 'dataset')->name('predicts.dataset');
 });
