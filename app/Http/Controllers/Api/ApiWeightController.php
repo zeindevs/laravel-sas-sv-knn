@@ -20,6 +20,7 @@ class ApiWeightController extends Controller
     private function getWeight(string $id): Weight
     {
         $weight = Weight::find($id);
+
         if (!$weight) {
             throw new HttpResponseException(response()->json([
                 'errors' => [
