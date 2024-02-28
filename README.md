@@ -1,6 +1,17 @@
 # Laravel SAS-SV KNN
 
-Simple Implementation for Classification of Gadget Addiction to Students Using SAS-SV with K-Nearest Neighbor Algorithm Method.
+<div style="text-align: center;" align="center">
+   Simple Implementation for Classification of Gadget Addiction to Students Using SAS-SV with K-Nearest Neighbor Algorithm Method.
+</div>
+
+## Preview
+
+<div style="text-align: center;" align="center">
+   <i>Form</i>
+   <img src="./screenshot.webp" alt="Screenshot" width="100%" />
+   <i>Result</i>
+   <img src="./screenshot-result.webp" alt="Screenshot Result" width="100%" />
+</div>
 
 ## Features
 
