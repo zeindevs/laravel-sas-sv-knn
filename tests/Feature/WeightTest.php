@@ -58,12 +58,12 @@ class WeightTest extends TestCase
         Log::info(json_encode($response->json(), JSON_PRETTY_PRINT));
 
         $response->assertStatus(400)->assertJson([
-            "errors" => [
-                "name" => [
-                    "The name field is required."
+            'errors' => [
+                'name' => [
+                    'The name field is required.'
                 ],
-                "weight" => [
-                    "The weight field is required."
+                'weight' => [
+                    'The weight field is required.'
                 ]
             ]
         ]);
@@ -165,6 +165,26 @@ class WeightTest extends TestCase
     }
 
     /**
+     * A feature test list weight.
+     */
+    public function test_list_weight(): void
+    {
+        $this->seed([WeightSeeder::class]);
+
+        $weights = Weight::select('weight')->whereIn('id', [1, 2, 3, 4, 5, 6])->get();
+
+        $answers = [];
+
+        foreach ($weights as $item) {
+            array_push($answers, $item['weight']);
+        };
+
+        Log::info(json_encode($answers, JSON_PRETTY_PRINT));
+
+        $this->assertEquals(6, count($answers));
+    }
+
+    /**
      * A feature test update weight success.
      */
     public function test_update_success(): void
@@ -234,12 +254,12 @@ class WeightTest extends TestCase
         Log::info(json_encode($response->json(), JSON_PRETTY_PRINT));
 
         $response->assertStatus(400)->assertJson([
-            "errors" => [
-                "name" => [
-                    "The name field is required."
+            'errors' => [
+                'name' => [
+                    'The name field is required.'
                 ],
-                "weight" => [
-                    "The weight field is required."
+                'weight' => [
+                    'The weight field is required.'
                 ]
             ]
         ]);

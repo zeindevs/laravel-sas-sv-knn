@@ -46,3 +46,12 @@ Route::controller(ApiPredictionController::class)->group(function () {
     Route::get('/predicts', 'predict')->name('predicts.predict');
     Route::get('/predicts/datasets', 'dataset')->name('predicts.dataset');
 });
+
+Route::controller(ApiSubmissionController::class)->group(function () {
+    Route::get('/submissions/{id}', 'show')->name('submissions.show');
+    Route::post('/submissions', 'store')->name('submissions.store');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/submissions', 'index')->name('submissions.index');
+        Route::delete('/submissions/{id}', 'destroy')->whereNumber('id')->name('submissions.destroy');
+    });
+});
