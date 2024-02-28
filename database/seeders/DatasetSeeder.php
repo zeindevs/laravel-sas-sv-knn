@@ -16,7 +16,7 @@ class DatasetSeeder extends Seeder
     public function run(): void
     {
         for ($d = 1; $d < 10; $d++) {
-            $prediction = Random::generate(1, '0-1') == "1" ? "Addiction" : "Not addicted";
+            $prediction = Random::generate(1, '0-1') == "1" ? "Addiction" : "Not Addiction";
 
             $dataset = Dataset::create([
                 'prediction' => $prediction,
