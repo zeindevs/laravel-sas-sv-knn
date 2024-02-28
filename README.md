@@ -20,6 +20,16 @@
 - Import Dataset (.csv only)
 - Submission (public access)
 
+## Todos
+
+- [x] CRUD
+- [x] SAS-SV and KNN Function
+- [x] Unit Test
+- [ ] Import Dataset
+- [x] UI Form Submission and result
+- [ ] UI Auth
+- [ ] UI Dashboard
+
 ## Project Requirements
 
 - [REQUIREMENTS](./REQUIREMENTS.md)
