@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SubmissionSubmitRequest;
+use App\Models\Dataset;
 use App\Models\Question;
 use App\Models\Submission;
 use App\Models\Weight;
@@ -78,6 +79,25 @@ class HomeController extends Controller
         return view('result', [
             'title' => 'Result',
             'submission' => $submission
+        ]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function dashboard(): Renderable
+    {
+        $total_submited = Submission::count();
+        $total_dataset = Dataset::count();
+        $submited = Submission::limit(10)->orderBy('created_at', 'desc')->get();
+
+        return view('home', [
+            'title' => 'Dashboard',
+            'total_dataset' => $total_dataset,
+            'total_submited' => $total_submited,
+            'submited' => $submited,
         ]);
     }
 }

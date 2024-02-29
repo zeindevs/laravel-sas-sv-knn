@@ -22,3 +22,9 @@ Route::controller(HomeController::class)->group(function () {
     Route::post('/result', 'result')->name('result');
     Route::get('/result/{id}', 'result')->name('result.id');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/dashboard', 'dashboard')->name('dashboard');
+    });
+});
