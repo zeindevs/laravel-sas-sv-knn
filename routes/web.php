@@ -26,5 +26,6 @@ Route::controller(HomeController::class)->group(function () {
 Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
+        Route::get('/dataset', 'dataset')->name('dataset');
     });
 });

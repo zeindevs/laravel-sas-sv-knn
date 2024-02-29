@@ -11,6 +11,7 @@ use App\Services\PredictionService;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -98,6 +99,24 @@ class HomeController extends Controller
             'total_dataset' => $total_dataset,
             'total_submited' => $total_submited,
             'submited' => $submited,
+        ]);
+    }
+
+    /**
+     * Show the application dataset.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function dataset(Request $request): Renderable
+    {
+        $limit = $request->get('limit', 10);
+
+        $datasets = Dataset::with('items')->paginate(perPage: $limit);
+
+        return view('dataset', [
+            'title' => 'Dataset',
+            'datasets' => $datasets
         ]);
     }
 }
