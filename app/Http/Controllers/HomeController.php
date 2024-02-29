@@ -119,4 +119,22 @@ class HomeController extends Controller
             'datasets' => $datasets
         ]);
     }
+
+    /**
+     * Show the application submission.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function submission(Request $request): Renderable
+    {
+        $limit = $request->get('limit', 10);
+
+        $submissions = Submission::paginate(perPage: $limit);
+
+        return view('submission', [
+            'title' => 'Submission',
+            'submissions' => $submissions
+        ]);
+    }
 }
