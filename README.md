@@ -27,8 +27,8 @@
 - [x] Unit Test
 - [ ] Import Dataset
 - [x] UI Form Submission and result
-- [ ] UI Auth
-- [ ] UI Dashboard
+- [x] UI Auth
+- [x] UI Dashboard
 
 ## Project Requirements
 
