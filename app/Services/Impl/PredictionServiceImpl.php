@@ -3,7 +3,12 @@
 namespace App\Services\Impl;
 
 use App\Models\Dataset;
+use App\Models\Submission;
+use App\Models\Weight;
 use App\Services\PredictionService;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PredictionServiceImpl implements PredictionService
 {
@@ -14,7 +19,7 @@ class PredictionServiceImpl implements PredictionService
 	 * @param array $point2
 	 * @return float
 	 */
-	public function euclideanDistance(array $point1, array $point2)
+	private function euclideanDistance(array $point1, array $point2)
 	{
 		$sum = 0;
 		$n = count($point1);
@@ -32,7 +37,7 @@ class PredictionServiceImpl implements PredictionService
 	 * @param array $dateset
 	 * @return string|int|null
 	 * */
-	public function knn(int $k, array $answer, array $dataset)
+	private function knn(int $k, array $answer, array $dataset)
 	{
 		$distances = [];
 
@@ -67,7 +72,7 @@ class PredictionServiceImpl implements PredictionService
 	 * @param array $answer
 	 * @return string|int|null
 	 * */
-	public function predict(array $answer)
+	public function predict(array $answer): string|int|null
 	{
 		// Sample dataset - You should replace this with your actual dataset
 		// $dataset = [
@@ -97,5 +102,57 @@ class PredictionServiceImpl implements PredictionService
 		$result = $this->knn($k, $answer, $datasets);
 
 		return $result;
+	}
+
+	/**
+	 * SAS-SV-KNN Prediction and SAve
+	 * 
+	 * @param \Illuminate\Http\Request $request
+	 * @return \App\Models\Submission|\Exception
+	 * */
+	public function predictAndSave(Request $request): Submission
+	{
+		try {
+			$validated = $request->validated();
+
+			$questions = [];
+
+			// Get list answer id
+			foreach ($validated['questions'] as $qa) {
+				array_push($questions, $qa['answer']);
+			}
+
+			DB::beginTransaction();
+
+			$weights = Weight::select('Weight')->whereIn('id', $questions)->get();
+
+			$answers = [];
+
+			// Get list answer weight
+			foreach ($weights as $item) {
+				array_push($answers, $item['weight']);
+			};
+
+			$submision = new Submission();
+			$submision->name = $validated['name'];
+			$submision->prediction = $this->predict($answers);
+			$submision->save();
+
+			// Store submission item
+			foreach ($validated['questions'] as $qa) {
+				$submision->items()->create([
+					'question_id' => $qa['id'],
+					'weight_id' => $qa['answer'],
+				]);
+			}
+
+			DB::commit();
+
+			return $submision;
+		} catch (Exception $e) {
+			DB::rollBack();
+
+			throw $e;
+		}
 	}
 }

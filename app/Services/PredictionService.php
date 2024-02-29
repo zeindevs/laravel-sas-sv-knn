@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Submission;
+use Exception;
+use Illuminate\Http\Request;
+
 interface PredictionService
 {
-	public function euclideanDistance(array $point1, array $point2);
+	public function predict(array $testPoint): string|int|null;
 
-	public function knn(int $k, array $testPoint, array $dataset);
-
-	public function predict(array $testPoint);
+	public function predictAndSave(Request $request): Submission|Exception;
 }
