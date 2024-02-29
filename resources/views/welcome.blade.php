@@ -6,54 +6,104 @@
         <div class="col-md-12">
             <div class="card bg-white">
                 <div class="card-header">
-                    <h3 class="fs-4 mb-0">{{ __('Submission') }}</h3>
+                    <h4 class="mb-0">{{ __('Submission') }}</h4>
                 </div>
-                <form class="card-body bg-white" action="{{ route('predict') }}" method="post">
+                <form
+                    class="card-body bg-white"
+                    action="{{ route('result') }}"
+                    method="post"
+                >
                     @csrf
 
                     <div class="form-group mb-3">
                         <label for="name" class="form-label">{{ __('Your Name') }}</label>
-                        <input type="text" class="form-control" name="name" placeholder="John Doe" required>
+                        <input
+                            type="text"
+                            class="form-control @error('name') is-invalid @enderror"
+                            name="name"
+                            value="{{ old('name') }}"
+                            placeholder="John Doe"
+                            autocomplete="email"
+                            required
+                        />
+
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
+
                     <p>{{ __('Questions:') }}</p>
-                    <div class="overflow-auto">
-                        <table class="table table-bordered table-responsive">
+                    <div class="overflow-x-auto">
+                        <table class="table table-bordered table-striped table-responsive">
                             <thead>
                                 <tr>
-                                    <th style="width: 1%;">#</th>
+                                    <th style="width: 1%">#</th>
                                     <th>Question</th>
                                     @foreach ($answers as $answer)
-                                        <th class="text-nowrap">{{ $answer['name'] }} ({{ $answer['weight'] }})</th>
+                                    <th class="text-nowrap">
+                                        ({{ $answer['weight'] }})
+                                    </th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($questions as $key => $question)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>{{ $question['name'] }}</td>
-                                         @foreach ($answers as $answer)
-                                            <td class="text-center">
-                                                <input type="text" class="form-control" name="questions[{{$key}}][id]" value="{{ $question['id'] }}" hidden />
-                                                <input type="radio" name="questions[{{$key}}][answer]" value="{{ $answer['id'] }}" required />
-                                            </td>
-                                        @endforeach
-                                    </tr>
+                                <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>
+                                        <p class="mb-0">
+                                            {{ $question['name'] }}
+                                        </p>
+                                        @error('questions.'. $key .'.answer')
+                                        <span
+                                            class="text-danger small"
+                                            role="alert"
+                                        >
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </td>
+                                    @foreach ($answers as $answer)
+                                    <td class="text-nowrap bg-light">
+                                        <div class="form-check">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                name="questions[{{ $key }}][id]"
+                                                value="{{ $question['id'] }}"
+                                                hidden
+                                            />
+                                            <label
+                                                for=""
+                                                class="form-check-label"
+                                                >{{ $answer['name'] }}</label
+                                            >
+                                            <input
+                                                type="radio"
+                                                class="form-check-input"
+                                                name="questions[{{ $key }}][answer]"
+                                                value="{{ $answer['id'] }}"
+                                                required
+                                            />
+                                        </div>
+                                    </td>
+                                    @endforeach
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Submit') }}
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<footer class="container p-3">
-    <div class="text-center">
-        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-    </div>
-</footer>
 @endsection

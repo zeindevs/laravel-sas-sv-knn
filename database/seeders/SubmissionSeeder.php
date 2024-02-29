@@ -15,7 +15,7 @@ class SubmissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $prediction = Random::generate(1, '0-1') == "1" ? "Addiction" : "Not addicted";
+        $prediction = Random::generate(1, '0-1') == "1" ? "Addiction" : "Non addicted";
 
         $submission = Submission::create([
             'name' => "Sayuri Hokkaido",

@@ -17,9 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
-Route::post('/result', [HomeController::class, 'result'])->name('predict');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('welcome');
+    Route::post('/result', 'result')->name('result');
+    Route::get('/result/{id}', 'result')->name('result.id');
 });
