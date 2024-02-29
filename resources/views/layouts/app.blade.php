@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@isset($title) {{ $title }} - @endisset{{ config('app.name', 'Laravel') }} </title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -33,7 +33,25 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @auth
+                            @if (Route::has('dashboard'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                                </li>
+                            @endif
 
+                            @if (Route::has('dataset'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('dataset') }}">{{ __('Dataset') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('submission'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('submission') }}">{{ __('Submission') }}</a>
+                                </li>
+                            @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -58,15 +76,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
                                 </div>
                             </li>
                         @endguest
@@ -78,6 +95,13 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="container p-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <span>Copyright &copy; {{ now()->format('Y') }} <a href="https://github.com/zeindevs" class="text-black text-decoration-none">Zein Studio</a></span>
+                <span>Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</span>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
