@@ -10,7 +10,7 @@
                 </div>
                 <form
                     class="card-body bg-white"
-                    action="{{ route('result') }}"
+                    action="{{ route('predict') }}"
                     method="post"
                 >
                     @csrf
@@ -43,7 +43,7 @@
                                     <th>Question</th>
                                     @foreach ($answers as $answer)
                                     <th class="text-nowrap">
-                                        ({{ $answer['weight'] }})
+                                        ({{ $answer['weight'] }}) {{ $answer['name'] }}
                                     </th>
                                     @endforeach
                                 </tr>
@@ -75,11 +75,9 @@
                                                 value="{{ $question['id'] }}"
                                                 hidden
                                             />
-                                            <label
-                                                for=""
-                                                class="form-check-label"
-                                                >{{ $answer['name'] }}</label
-                                            >
+                                            <label for="" class="form-check-label">
+                                                ({{ $answer['weight'] }})
+                                            </label>  
                                             <input
                                                 type="radio"
                                                 class="form-check-input"
@@ -87,6 +85,7 @@
                                                 value="{{ $answer['id'] }}"
                                                 required
                                             />
+                                            </div>
                                         </div>
                                     </td>
                                     @endforeach

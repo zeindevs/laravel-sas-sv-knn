@@ -34,6 +34,12 @@
 
 - [REQUIREMENTS](./REQUIREMENTS.md)
 
+## References
+
+- Kwon M, Kim DJ, Cho H, Yang S (2013) The Smartphone Addiction Scale: Development and Validation of a Short Version for Adolescents. PLOS ONE 8(12): e83558. https://doi.org/10.1371/journal.pone.0083558
+- Kwon, Min; Kim, Dai-Jin; Cho, Hyun; Yang, Soo (2015). Appendix S1 - The Smartphone Addiction Scale: Development and Validation of a Short Version for Adolescents. PLOS ONE. Dataset. https://doi.org/10.1371/journal.pone.0083558.s001
+- Majid, B. a. M., Mubarak, A., & Lutfi, S. (2022). Classification of Device Addiction to Students Using SAS-SV with K-Nearest Neighbor Algorithm Method. Journal of Computer Engineering Electronics and Information Technology, 1(1), 39–50. https://doi.org/10.17509/coelite.v1i1.51616
+
 ## Licanse
 
 ```

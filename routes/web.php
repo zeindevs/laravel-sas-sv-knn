@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('welcome');
-    Route::post('/result', 'result')->name('result');
+    Route::post('/result', 'predict')->name('predict');
     Route::get('/result/{id}', 'result')->name('result.id');
 });
 

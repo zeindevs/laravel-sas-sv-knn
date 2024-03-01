@@ -12,7 +12,6 @@ use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -57,7 +56,6 @@ class HomeController extends Controller
 
             return redirect('/result/' . $submission->id);
         } catch (Exception $e) {
-            DB::rollBack();
 
             return redirect('/')->withErrors($e);
         }
